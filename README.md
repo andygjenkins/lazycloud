@@ -4,34 +4,40 @@ AWS Terminal UI for the Modern Developer - inspired by lazydocker, lazygit, and 
 
 ## Quick Start
 
-### With LocalStack (Development)
+### 🧪 Development (LocalStack)
 
-1. **Start LocalStack**:
+Get started in 30 seconds with a complete test environment:
+
+```bash
+# Complete setup with test Lambda functions, S3 buckets, ECS resources
+make dev-setup
+
+# Run LazyCloud with test data
+make dev-run
+```
+
+**What you get:**
+- 3 test Lambda functions ready to explore
+- S3 buckets with sample data
+- ECS cluster with task definitions
+- No AWS credentials needed
+
+### ☁️ Production (AWS)
+
+Connect to your real AWS account:
+
+1. **Configure AWS credentials**:
    ```bash
-   docker-compose up -d
+   aws configure                    # Set up default profile
+   # OR
+   aws configure --profile myprof   # Set up named profile
    ```
 
 2. **Run LazyCloud**:
    ```bash
-   LAZYCLOUD_LOCAL=true make run
-   ```
-
-### With Real AWS
-
-1. **Configure AWS credentials** (one of these methods):
-   ```bash
-   # Using AWS CLI
-   aws configure
-   
-   # Using environment variables
-   export AWS_ACCESS_KEY_ID=your_key
-   export AWS_SECRET_ACCESS_KEY=your_secret
-   export AWS_DEFAULT_REGION=us-east-1
-   ```
-
-2. **Run LazyCloud**:
-   ```bash
-   make run
+   make run                        # Use default profile
+   # OR  
+   AWS_PROFILE=myprof make run    # Use specific profile
    ```
 
 ## Features
@@ -72,12 +78,17 @@ AWS Terminal UI for the Modern Developer - inspired by lazydocker, lazygit, and 
 git clone <repo>
 cd lazycloud
 
-# Start LocalStack with test data
-docker-compose up -d
+# Complete development setup (recommended)
+make dev-setup
 
-# Build and run
-make build
-LAZYCLOUD_LOCAL=true ./bin/lazycloud
+# Or manual setup
+make dev-start     # Start LocalStack
+make dev-run       # Run LazyCloud
+
+# Other useful commands
+make dev-status    # Check what test resources are available
+make dev-reset     # Reset to clean state
+make help          # See all commands
 ```
 
 ### Project Structure
@@ -101,14 +112,23 @@ The project includes a complete LocalStack setup with test Lambda functions:
 - **data-processor**: Processes data arrays
 - **error-function**: Demonstrates error handling
 
-### Build Commands
+### Development Commands
 
 ```bash
-make build          # Build binary
-make run           # Run with go run
+# Development workflow
+make dev-setup     # Complete setup with test resources
+make dev-run       # Run with LocalStack
+make dev-status    # Check available test resources
+make dev-stop      # Stop LocalStack
+make dev-reset     # Reset to clean state
+
+# Standard commands  
+make build         # Build binary
+make run           # Run with system AWS credentials
 make test          # Run tests
+make lint          # Run linter
 make clean         # Clean build artifacts
-make build-all     # Build for all platforms
+make help          # Show all available commands
 ```
 
 ## Configuration
